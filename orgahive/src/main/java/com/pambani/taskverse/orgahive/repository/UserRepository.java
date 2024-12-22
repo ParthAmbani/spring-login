@@ -2,11 +2,15 @@ package com.pambani.taskverse.orgahive.repository;
 
 import com.pambani.taskverse.orgahive.dto.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 
 import java.util.List;
 
 public interface UserRepository extends MongoRepository<User, String> {
     User findByEmail(String email);
+    User findByPhoneNumber(String phoneNumber);
+    @Query("{ '$or': [ { 'email': ?0 }, { 'phoneNumber': ?0 } ] }")
+    User findByEmailOrPhoneNumber(String emailOrPhoneNumber);
 
     // Method to return the first matching user based on email
     default User findFirstByEmail(String email) {

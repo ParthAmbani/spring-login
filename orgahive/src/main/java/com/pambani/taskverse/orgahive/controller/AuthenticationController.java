@@ -13,25 +13,36 @@ import org.springframework.web.bind.annotation.*;
 public class AuthenticationController {
 
     @Autowired
-   private UserRepository userRepository;
+    private UserRepository userRepository;
 
     @PostMapping("/signup")
     public ResponseEntity<String> signUp(@RequestBody User user) {
+        // Check if email or phone number is already used
         if (userRepository.findByEmail(user.getEmail()) != null) {
-            return ResponseEntity.badRequest().body("User already exists");
+            return ResponseEntity.badRequest().body("Email is already in use");
         }
+        if (userRepository.findByPhoneNumber(user.getPhoneNumber()) != null) {
+            return ResponseEntity.badRequest().body("Phone number is already in use");
+        }
+
+        // Save the user
         userRepository.save(user);
         return ResponseEntity.ok("User signed up successfully!");
     }
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
-        // TODO: Implement login logic (validate user credentials)
-        return ResponseEntity.ok("Login successful!");
-    }
+        // Check if the user exists by email or phone number
+        User user = userRepository.findByEmailOrPhoneNumber(loginRequest.getEmailOrPhoneNumber());
+        if (user == null) {
+            return ResponseEntity.badRequest().body("Invalid email/phone number or password");
+        }
 
-    @GetMapping("/login/success")
-    public ResponseEntity<String> googleLoginSuccess() {
-        return ResponseEntity.ok("Google Login Successful!");
+        // Validate the password
+        if (!user.getPassword().equals(loginRequest.getPassword())) {
+            return ResponseEntity.badRequest().body("Invalid email/phone number or password");
+        }
+
+        return ResponseEntity.ok("Login successful!");
     }
 }

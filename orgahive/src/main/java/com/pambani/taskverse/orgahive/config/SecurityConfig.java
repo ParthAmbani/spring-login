@@ -1,4 +1,4 @@
-package com.pambani.taskverse.orgahive;
+package com.pambani.taskverse.orgahive.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

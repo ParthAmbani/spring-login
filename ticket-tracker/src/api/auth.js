@@ -43,3 +43,8 @@ API.interceptors.response.use(
 export const signUp = (data) => {
     return API.post("/signup", data, getAuthHeaders()); // Add auth header to the POST request
 };
+
+// Define the login function with the Authorization header
+export const login = (data) => {
+    return API.post("/login", data, getAuthHeaders()); // Add auth header to the POST request
+};

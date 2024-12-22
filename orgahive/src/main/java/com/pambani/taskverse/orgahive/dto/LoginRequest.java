@@ -1,16 +1,15 @@
 package com.pambani.taskverse.orgahive.dto;
 
 public class LoginRequest {
-    private String email;
+    private String emailOrPhoneNumber;
     private String password;
 
-    // Getters and setters
-    public String getEmail() {
-        return email;
+    public String getEmailOrPhoneNumber() {
+        return emailOrPhoneNumber;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmailOrPhoneNumber(String emailOrPhoneNumber) {
+        this.emailOrPhoneNumber = emailOrPhoneNumber;
     }
 
     public String getPassword() {
